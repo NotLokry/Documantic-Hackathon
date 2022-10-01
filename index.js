@@ -630,13 +630,6 @@ async function Tetris(message){
 									middles.push(places.filter(place => place.floating)[i])
 								}
 							}
-							// places.filter(place => place.floating).forEach(place => {
-							// 	for(let i=0;i<places.filter(place => place.floating).length;i++){
-							// 		if(places.filter(place => place.floating)[i].name.slice(0,1) == place.name.slice(0,1) && !middles.includes(place)){
-							// 			middles.push(place)
-							// 		}
-							// 	}
-							// })
 							if(abc.indexOf(middles[0].name.slice(0,1)) < abc.indexOf(middles[middles.length-1].name.slice(0,1))){
 								middle = middles[middles.length-1]
 							}else{middle = middles[0]}
@@ -660,13 +653,6 @@ async function Tetris(message){
 									middles.push(places.filter(place => place.floating)[i])
 								}
 							}
-							// places.filter(place => place.floating).forEach(place => {
-							// 	for(let i=0;i<places.filter(place => place.floating).length;i++){
-							// 		if(places.filter(place => place.floating)[i].name.slice(1) == place.name.slice(1) && !middles.includes(place)){
-							// 			middles.push(place)
-							// 		}
-							// 	}
-							// })
 							 
 							if(abc.indexOf(middles[0].name.slice(0,1)) < abc.indexOf(middles[middles.length-1].name.slice(0,1))){
 								middle = middles[middles.length-1]
@@ -805,12 +791,6 @@ async function Tetris(message){
 									place.name.slice(0,1) === abc[abc.indexOf(middle.name.slice(0,1))+i-1]
 								)[Number(places.filter(place => place.name.slice(1) === middle.name.slice(1))[0].name.slice(1))-1])
 							}
-							// for(let i=0;i<1;i++){
-							// 	if(middle.name.slice(0,1) === abc[i] && abc[i] == "p")return
-							// 	moveablePlaces.push(places.filter(place => 
-							// 		place.name.slice(0,1) === abc[abc.indexOf(`${middle.name.slice(0,1)}`)]
-							// 	)[Number(places.filter(place => Number(place.name.slice(1)) === Number(middle.name.slice(1))-2)[0].name.slice(1))+i])
-							// }
 
 							for(let i=0;i<1;i++){
 								moveablePlaces.push(places.filter(place => place.name.slice(0,1) === abc[abc.indexOf(middle.name.slice(0,1))+1]
@@ -1034,11 +1014,6 @@ async function Tetris(message){
 							rotated=0
 						}
 					}
-					// for(let i = 0;i<17;i++){
-					// 	if(position.name.slice(0,1) === abc[i]){
-					// 		moveablePlaces.push(places.filter(place => place.name === `${abc[i+1]}${position.name.slice(1)}`)[0])[0]
-					// 	}
-					// }
 				}
 				if(moveablePlaces.length <= 3 || moveablePlaces.includes(undefined) || moveablePlaces.filter(p => p == undefined).length >=1)return
 				console.log(moveablePlaces)
