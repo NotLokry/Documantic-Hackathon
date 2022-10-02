@@ -109,7 +109,7 @@ async function Tetris(message){
 			 * @param {Array} places
 			*/
 			const forms = ["o","i",'s','z','j','l']
-			const type = "z" || forms[Math.floor(Math.random() * forms.length)]
+			const type = forms[Math.floor(Math.random() * forms.length)]
 			let spawnArea = places.filter(place => place.emoji === `${backgroundEmoji}` && place.name.slice(0,1) == "a" && Number(place.name.slice(1)) >=2 && Number(place.name.slice(1)) <= 8)
 			let blockSpawn = spawnArea[Math.floor(Math.random() * spawnArea.length)]
 			if(type == "i"){
