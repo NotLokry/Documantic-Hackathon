@@ -278,9 +278,9 @@ async function Tetris(message){
 			let stoped = false
 			let newBlock = false
 			function Checker(places,oldPositions,newPositions){
-				if(newPositions.length <= 3 || newPositions.includes(undefined) || newPositions.filter(p => p == undefined).length >=1){
+				if(newPositions.length <= 3 || newPositions.filter(p => p == undefined).length >=1){
 					for(let x=0;x<18;x++){
-						if(places.filter(place => place.name.slice(0,1) == "a").filter(place => place.landed)){
+						if(places.filter(place => place.name.slice(0,1) == "a" && place.landed).length >=1){
 							stoped = true
 						}
 					}
@@ -295,6 +295,7 @@ async function Tetris(message){
 				if(places.filter(place => place.floating == true).length >= 1){
 					let ok = true;
 						for(let i = 0;i<newPositions.length;i++){
+							console.log(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length)
 							if(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length >= 1){
 								newPositions.forEach(newPosition=>{
 									newPosition.floating = false
@@ -356,8 +357,10 @@ async function Tetris(message){
 							places.filter(place => place.name.slice(0,1) == abc[y])[i].landed = false
 							places.filter(place => place.name.slice(0,1) == abc[y])[i].floating = false
 						}
-						for(let i=places.filter(place => place.landed).length-1;i>-1;i--){
+						console.log(places.filter(place => place.name.slice(0,1) == abc[y] && place.landed))
+						for(let i=places.filter(place => place.name.slice(0,1) == abc[y] && place.landed).length-1;i>-1;i--){
 							position=places.filter(place => place.landed)[i]
+							console.log(position,places.filter(place => place.landed))
 							const pl = places.filter(place => place.name === `${abc[abc.indexOf(position.name.slice(0,1))+1]}${position.name.slice(1)}`)[0]
 							if(pl){
 								pl.emoji = position.emoji
@@ -422,29 +425,12 @@ async function Tetris(message){
 			let stoped = false
 			let newBlock = false
 			function Checker(places,oldPositions,newPositions,iName){
-				if(newPositions.length <= 3 || newPositions.includes(undefined) || newPositions.filter(p => p == undefined).length >=1){
+				if(newPositions.length != 4 || newPositions.filter(p => p == undefined).length >=1){
+					if(iName == "right" || iName == "left")return
 					for(let x=0;x<18;x++){
-						if(places.filter(place => place.name.slice(0,1) == "a").filter(place => place.landed)){
+						if(places.filter(place => place.name.slice(0,1) == "a" && place.landed).length >= 1){
 							stoped = true
 						}
-					}
-				}
-				for(let y=0;y<18;y++){
-					if(places.filter(place => place.name.slice(0,1) == abc[y] && place.landed).length >= 10){
-						for(let i=0;i<places.filter(place => place.name.slice(0,1) == abc[y]).length;i++){
-							places.filter(place => place.name.slice(0,1) == abc[y])[i].landed = false
-							places.filter(place => place.name.slice(0,1) == abc[y])[i].floating = false
-						}
-						let positions = places.filter(place => place.landed)
-						positions.forEach(position => {
-							for(let i = 0;i<17-y;i++){
-								places.filter(place => place.name === `${abc[i+1]}${position.name.slice(1)}`)[i]
-								if(position.name.slice(0,1) === abc[i]){
-									places.filter(place => place.name === `${abc[i+1]}${position.name.slice(1)}`)[i].emoji = position.emoji
-									places.filter(place => place.name === `${abc[i+1]}${position.name.slice(1)}`)[i].landed = true
-								}
-							}
-						})
 					}
 				}
 				oldPositions.forEach(oldPosition => {
@@ -457,7 +443,8 @@ async function Tetris(message){
 				if(places.filter(place => place.floating == true).length >= 1){
 					let ok = true;
 						for(let i = 0;i<newPositions.length;i++){
-							if(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed).length >= 1){
+							console.log(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length)
+							if(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length >= 1){
 								newPositions.forEach(newPosition=>{
 									newPosition.floating = false
 									newPosition.landed = true;
@@ -473,7 +460,6 @@ async function Tetris(message){
 								ok = true
 							}
 						}
-
 					if(newPositions.filter(p => p.landed == true).length >=1){
 						if(iName == "right" || iName == "left")return
 						oldPositions.forEach(oldPosition=>{
@@ -526,9 +512,29 @@ async function Tetris(message){
 				}else{
 					newBlock = true;
 				}
+				for(let y=0;y<18;y++){
+					if(places.filter(place => place.name.slice(0,1) == abc[y] && place.landed).length >= 10){
+						for(let i=0;i<places.filter(place => place.name.slice(0,1) == abc[y]).length;i++){
+							places.filter(place => place.name.slice(0,1) == abc[y])[i].landed = false
+							places.filter(place => place.name.slice(0,1) == abc[y])[i].floating = false
+						}
+						for(let i=places.filter(place => place.landed).length-1;i>-1;i--){
+							position=places.filter(place => place.landed)[i]
+							const pl = places.filter(place => place.name === `${abc[abc.indexOf(position.name.slice(0,1))+1]}${position.name.slice(1)}`)[0]
+							if(pl){
+								pl.emoji = position.emoji
+								pl.landed = true
+							}
+							position.landed = false
+							position.emoji = backgroundEmoji
+						}
+						console
+					}
+				}
 				places.filter(place => !place.floating && !place.landed).forEach(place => {place.emoji = "⬛"})
 				if(newBlock){
-					if(oldPositions.filter(place => place.name.slice(0,1) == "a").length >= 1)return stoped = true
+					console.log(oldPositions)
+					if(oldPositions.filter(place => place.name.slice(0,1) == "a" && place.landed).length >= 1)return stoped = true
 					rotated = 0
 					CreateBlocks(places,"⬛")
 				}
