@@ -109,7 +109,7 @@ async function Tetris(message){
 			 * @param {Array} places
 			*/
 			const forms = ["o","i",'s','z','j','l']
-			const type = forms[Math.floor(Math.random() * forms.length)]
+			const type = "z" || forms[Math.floor(Math.random() * forms.length)]
 			let spawnArea = places.filter(place => place.emoji === `${backgroundEmoji}` && place.name.slice(0,1) == "a" && Number(place.name.slice(1)) >=2 && Number(place.name.slice(1)) <= 8)
 			let blockSpawn = spawnArea[Math.floor(Math.random() * spawnArea.length)]
 			if(type == "i"){
@@ -414,7 +414,7 @@ async function Tetris(message){
 			}
 			getPosition(places)
 		}
-		Updater()
+		//Updater()
 		const filter = int => int.user.id == message.author.id
 		const collector = reply.createMessageComponentCollector({filter})
 		collector.on("collect",async d => {
@@ -655,6 +655,7 @@ async function Tetris(message){
 							if(abc.indexOf(middles[0].name.slice(0,1)) < abc.indexOf(middles[middles.length-1].name.slice(0,1))){
 								middle = middles[middles.length-1]
 							}else{middle = middles[0]}
+							console.log(middle,middles)
 							for(let i=0;i<2;i++){
 								if(middle.name.slice(0,1) === abc[i] && abc[i] == "p")return
 								moveablePlaces.push(places.filter(place => 
@@ -675,12 +676,13 @@ async function Tetris(message){
 								}
 							}
 							if(abc.indexOf(middles[0].name.slice(0,1)) < abc.indexOf(middles[middles.length-1].name.slice(0,1))){
-								middle = middles[0]
-							}else{middle = middles[1]}
+								middle = middles[1]
+							}else{middle = middles[0]}
+							console.log(middle,middles)
 							for(let i=0;i<2;i++){
 								if(middle.name.slice(0,1) === abc[i] && abc[i] == "p")return
-								moveablePlaces.push(places.filter(place => place.name.slice(0,1) === abc[abc.indexOf(`${middle.name.slice(0,1)}`)+1]
-								)[Number(places.filter(place => place.name.slice(1) === middle.name.slice(1))[0].name.slice(1))+i])
+								moveablePlaces.push(places.filter(place => place.name.slice(0,1) === abc[abc.indexOf(`${middle.name.slice(0,1)}`)-1]
+								)[Number(places.filter(place => Number(place.name.slice(1)) === Number(middle.name.slice(1))-1)[0].name.slice(1))-i])
 
 								moveablePlaces.push(places.filter(place => place.name.slice(0,1) === abc[abc.indexOf(`${middle.name.slice(0,1)}`)]
 								)[Number(places.filter(place => place.name.slice(1) === middle.name.slice(1))[0].name.slice(1))-i])
