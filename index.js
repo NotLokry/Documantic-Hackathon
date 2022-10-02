@@ -414,7 +414,7 @@ async function Tetris(message){
 			}
 			getPosition(places)
 		}
-		//Updater()
+		Updater()
 		const filter = int => int.user.id == message.author.id
 		const collector = reply.createMessageComponentCollector({filter})
 		collector.on("collect",async d => {
