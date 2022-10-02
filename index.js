@@ -295,7 +295,6 @@ async function Tetris(message){
 				if(places.filter(place => place.floating == true).length >= 1){
 					let ok = true;
 						for(let i = 0;i<newPositions.length;i++){
-							console.log(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length)
 							if(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length >= 1){
 								newPositions.forEach(newPosition=>{
 									newPosition.floating = false
@@ -357,19 +356,21 @@ async function Tetris(message){
 							places.filter(place => place.name.slice(0,1) == abc[y])[i].landed = false
 							places.filter(place => place.name.slice(0,1) == abc[y])[i].floating = false
 						}
-						console.log(places.filter(place => place.name.slice(0,1) == abc[y] && place.landed))
-						for(let i=places.filter(place => place.name.slice(0,1) == abc[y] && place.landed).length-1;i>-1;i--){
-							position=places.filter(place => place.landed)[i]
-							console.log(position,places.filter(place => place.landed))
-							const pl = places.filter(place => place.name === `${abc[abc.indexOf(position.name.slice(0,1))+1]}${position.name.slice(1)}`)[0]
-							if(pl){
-								pl.emoji = position.emoji
-								pl.landed = true
+						for(let u =0;u<19-y-1;u++){
+							console.log(places.filter(place => place.name.slice(0,1) == abc[y-u-1] && place.landed),abc[y-u-1],y-u-1,y,u,18-y-1)
+							if(places.filter(place => place.name.slice(0,1) == abc[y-u-1] && place.landed).length <= 0)return
+							for(let i=places.filter(place => place.name.slice(0,1) == abc[y-u-1] && place.landed).length-1;i>-1;i--){
+								position=places.filter(place => place.landed)[i]
+								console.log(position,abc[abc.indexOf(position.name.slice(0,1))+1])
+								const pl = places.filter(place => place.name === `${abc[abc.indexOf(position.name.slice(0,1))+1]}${position.name.slice(1)}`)[0]
+								if(pl){
+									pl.emoji = position.emoji
+									pl.landed = true
+								}
+								position.landed = false
+								position.emoji = backgroundEmoji
 							}
-							position.landed = false
-							position.emoji = backgroundEmoji
 						}
-						console
 					}
 				}
 				places.forEach(place => {
@@ -443,7 +444,6 @@ async function Tetris(message){
 				if(places.filter(place => place.floating == true).length >= 1){
 					let ok = true;
 						for(let i = 0;i<newPositions.length;i++){
-							console.log(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length)
 							if(places.filter(p => p.name.slice(0,1) == abc[abc.indexOf(newPositions[i].name.slice(0,1))+1] && p.landed && p.name.slice(1) == newPositions[i].name.slice(1)).length >= 1){
 								newPositions.forEach(newPosition=>{
 									newPosition.floating = false
