@@ -1026,4 +1026,4 @@ async function Tetris(message){
 			getPosition(places,d.customId)
 		})
 }
-module.exports({Tetris})
+module.exports = {Tetris}
