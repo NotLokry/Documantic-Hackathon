@@ -280,7 +280,6 @@ async function Tetris(message){
 			function Checker(places,oldPositions,newPositions){
 				if(newPositions.length <= 3 || newPositions.includes(undefined) || newPositions.filter(p => p == undefined).length >=1){
 					for(let x=0;x<18;x++){
-						console.log(places.filter(place => place.name.slice(0,1) == abc[x]).filter(place => place.landed))
 						if(places.filter(place => place.name.slice(0,1) == "a").filter(place => place.landed)){
 							stoped = true
 						}
@@ -425,7 +424,6 @@ async function Tetris(message){
 			function Checker(places,oldPositions,newPositions,iName){
 				if(newPositions.length <= 3 || newPositions.includes(undefined) || newPositions.filter(p => p == undefined).length >=1){
 					for(let x=0;x<18;x++){
-						console.log(places.filter(place => place.name.slice(0,1) == abc[x]).filter(place => place.landed))
 						if(places.filter(place => place.name.slice(0,1) == "a").filter(place => place.landed)){
 							stoped = true
 						}
@@ -1016,7 +1014,6 @@ async function Tetris(message){
 					}
 				}
 				if(moveablePlaces.length <= 3 || moveablePlaces.includes(undefined) || moveablePlaces.filter(p => p == undefined).length >=1)return
-				console.log(moveablePlaces)
 				DecideMovement(places,position,moveablePlaces,iName)
 			}
 			function getPosition(places,iName){
